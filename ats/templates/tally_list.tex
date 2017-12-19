@@ -1,0 +1,124 @@
+\documentclass[a4paper, landscape, \VAR{fontsize}pt]{article}
+%\usepackage[margin=0.2in,footskip=0.25in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{comment}
+\usepackage{lipsum}
+\usepackage[cm]{fullpage}
+\usepackage[margin=0pt]{geometry}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{pgf}
+\usepackage{pgfplots}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{eurosym}
+\usepackage{xcolor, colortbl}% http://ctan.org/pkg/xcolor
+
+
+\newcommand{\includegraphicsmaybe}[1]{\IfFileExists{#1}{\includegraphics{#1}}{}}
+\newcommand{\inputmaybe}[1]{\IfFileExists{#1}{\input{#1}}{}}
+
+\newcolumntype{?}{!{\vrule width 1.5pt}}
+\newcolumntype{$}{!{\vrule width 1.0pt}}
+
+\begin{document}
+
+
+\begin{tikzpicture}[overlay, remember picture]
+\node[anchor=north west, %anchor is upper left corner of the graphic
+      xshift=\VAR{positions['left']}cm, %shifting around
+      yshift=\VAR{positions['top']}cm]
+     at (current page.north west) %left upper corner of the page
+     {\includegraphics[width=3cm]{\VAR{filenames['tl']}}
+     };
+\end{tikzpicture}
+
+
+\begin{tikzpicture}[overlay, remember picture]
+\node[anchor=north west, %anchor is upper left corner of the graphic
+      xshift=\VAR{positions['right']}cm, %shifting around
+      yshift=\VAR{positions['top']}cm]
+     at (current page.north west) %left upper corner of the page
+     {\includegraphics[width=3cm]{\VAR{filenames['tr']}}
+     };
+\end{tikzpicture}
+
+\begin{tikzpicture}[overlay, remember picture]
+\node[anchor=north west, %anchor is upper left corner of the graphic
+      xshift=\VAR{positions['left']}cm, %shifting around
+      yshift=\VAR{positions['bottom']}cm]
+     at (current page.north west) %left upper corner of the page
+     {\includegraphics[width=3cm]{\VAR{filenames['bl']}}
+     };
+\end{tikzpicture}
+
+
+\begin{tikzpicture}[overlay, remember picture]
+\node[anchor=north west, %anchor is upper left corner of the graphic
+      xshift=\VAR{positions['right']}cm, %shifting around
+      yshift=\VAR{positions['bottom']}cm]
+     at (current page.north west) %left upper corner of the page
+     {\includegraphics[width=3cm]{\VAR{filenames['br']}}
+     };
+\end{tikzpicture}
+
+\vspace{2cm}
+\setlength\tabcolsep{0.10cm}
+\begin{tabular}{? m{3cm}
+    %% for item in items
+        ? c
+        %% for i in range(item['boxes'] - 1)
+            %% if (i+1) % 5 == 0 and i != 0
+                $ c
+            %% else
+                | c
+            %% endif
+        %% endfor
+    %% endfor
+    ?
+    }
+    \noalign{\hrule height 1pt}
+   %% for i in range(n_cols)
+        &
+        %% if i % 2 == 0
+           \cellcolor{black}
+        %% endif
+    %% endfor
+  \\ \hline
+
+    Names
+%% for item in items
+    & \multicolumn{\VAR{item['boxes']}}{c ? }{\VAR{item['name']}}
+%% endfor
+  \\
+%% for item in items
+    & \multicolumn{\VAR{item['boxes']}}{c ? }{(\VAR{ "%0.2f" | format(item['price'])} \euro)}
+%% endfor
+  \\ \hline
+
+%% for i, name in enumerate(names)
+    \VAR{name}
+    %% for j in range(n_cols)
+        %% if i % 2 == 0
+            \cellcolor{black!10}
+        %% endif
+        &
+        %% if j + 1 == n_cols and i % 2 == 0
+           \cellcolor{black}
+        %% endif
+    %% endfor
+     \\ \hline
+%% endfor
+
+   %% for i in range(n_cols)
+        &
+        %% if i % 2 == 0
+           \cellcolor{black}
+        %% endif
+    %% endfor
+  \\
+  \noalign{\hrule height 1pt}
+\end{tabular}
+
+
+\end{document}

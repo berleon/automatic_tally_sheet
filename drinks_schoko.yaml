@@ -1,0 +1,24 @@
+- name: Schokolade
+  price: 0.9
+  boxes: 12
+- name: Bionade
+  price: 0.8
+  boxes: 10
+- name: Cola
+  price: 0.9
+  boxes: 15
+- name: Apfelschorle
+  price: 0.8
+  boxes: 20
+- name: Bier
+  price: 0.85
+  boxes: 10
+- name: Club Mate
+  price: 1.0
+  boxes: 20
+- name: Apfel/Mandarine
+  price: 0.3
+  boxes: 15
+- name: Orange
+  price: 2.0
+  boxes: 15
