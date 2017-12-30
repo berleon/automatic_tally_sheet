@@ -37,7 +37,8 @@ def config_to_base64(config):
     return base64.b85encode(x).decode('utf8')
 
 
-POSITIONS = ['tl', 'tr', 'bl', 'br']
+POSITIONS = ['tl', 'tr', 'tlc', 'trc', 'bl', 'br']
+EDGE_POSITIONS = ['tl', 'tr', 'bl', 'br']
 
 
 def split_config(config):
@@ -61,14 +62,20 @@ def check_names(names):
             raise Exception("Name too long: {}".format(name))
 
 
-def run(names, items, output_name, output_dir):
+def run(args, names, items, output_name, output_dir):
     check_names(names)
     names = sorted(names)
-
+    names.extend([str(i+1) for i in range(args.placeholders)])
+    qr_width = 3
+    left = 0.3
+    right = 26.0
+    margin = 0.2
     positions = {
-        'left': 0.3,
+        'left': left,
+        'left_center': right - 2*(qr_width + margin),
+        'right_center': right - (qr_width + margin),
+        'right': right,
         'top': -0.3,
-        'right': 25.8,
         'bottom': -17.3,
     }
     config = {
@@ -80,6 +87,7 @@ def run(names, items, output_name, output_dir):
     if 'fontsize' not in config:
         config['fontsize'] = 10
     config['positions'] = positions
+    config['qr_code_width'] = 3
 
     filenames = {}
     for name, config_data in split_config(config):
@@ -93,7 +101,10 @@ def run(names, items, output_name, output_dir):
 
     tmp.compile(os.path.join(output_dir, output_name),
                 filenames=filenames,
+                rule_thick=1.0,
+                rule_very_thick=1.3,
                 n_cols=n_cols,
+                show_fridge_question=len(items) >= 3,
                 **config)
 
 
@@ -101,6 +112,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('names', type=str, help='name file')
     parser.add_argument('items', type=str, help='items file')
+    parser.add_argument('--placeholders', default=5, type=int, help='number of placeholder fields')
     parser.add_argument('-o', '--output-dir', type=str, default='output', help='output directory')
     args = parser.parse_args()
     with open(args.names, 'r') as f:
@@ -111,7 +123,7 @@ def main():
     items_basename = os.path.basename(args.items)
     output_name, _ = os.path.splitext(items_basename)
     output_name += '.tex'
-    run(names, items, output_name, args.output_dir)
+    run(args, names, items, output_name, args.output_dir)
 
 
 if __name__ == "__main__":

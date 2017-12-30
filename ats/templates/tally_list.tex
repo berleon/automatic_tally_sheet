@@ -18,51 +18,62 @@
 \newcommand{\includegraphicsmaybe}[1]{\IfFileExists{#1}{\includegraphics{#1}}{}}
 \newcommand{\inputmaybe}[1]{\IfFileExists{#1}{\input{#1}}{}}
 
-\newcolumntype{?}{!{\vrule width 1.5pt}}
-\newcolumntype{$}{!{\vrule width 1.0pt}}
+\newcolumntype{?}{!{\vrule width \VAR{rule_very_thick}pt}}
+\newcolumntype{$}{!{\vrule width \VAR{rule_thick}pt}}
 
 \begin{document}
-
-
 \begin{tikzpicture}[overlay, remember picture]
 \node[anchor=north west, %anchor is upper left corner of the graphic
       xshift=\VAR{positions['left']}cm, %shifting around
       yshift=\VAR{positions['top']}cm]
      at (current page.north west) %left upper corner of the page
-     {\includegraphics[width=3cm]{\VAR{filenames['tl']}}
+     {\includegraphics[width=\VAR{qr_code_width}cm]{\VAR{filenames['tl']}}
      };
 \end{tikzpicture}
-
-
+\begin{tikzpicture}[overlay, remember picture]
+\node[anchor=north west, %anchor is upper left corner of the graphic
+      xshift=\VAR{positions['left_center']}cm, %shifting around
+      yshift=\VAR{positions['top']}cm]
+     at (current page.north west) %left upper corner of the page
+     {\includegraphics[width=\VAR{qr_code_width}cm]{\VAR{filenames['tlc']}}
+     };
+\end{tikzpicture}
+\begin{tikzpicture}[overlay, remember picture]
+\node[anchor=north west, %anchor is upper left corner of the graphic
+      xshift=\VAR{positions['right_center']}cm, %shifting around
+      yshift=\VAR{positions['top']}cm]
+     at (current page.north west) %left upper corner of the page
+     {\includegraphics[width=\VAR{qr_code_width}cm]{\VAR{filenames['trc']}}
+     };
+\end{tikzpicture}
 \begin{tikzpicture}[overlay, remember picture]
 \node[anchor=north west, %anchor is upper left corner of the graphic
       xshift=\VAR{positions['right']}cm, %shifting around
       yshift=\VAR{positions['top']}cm]
      at (current page.north west) %left upper corner of the page
-     {\includegraphics[width=3cm]{\VAR{filenames['tr']}}
+     {\includegraphics[width=\VAR{qr_code_width}cm]{\VAR{filenames['tr']}}
      };
 \end{tikzpicture}
-
 \begin{tikzpicture}[overlay, remember picture]
 \node[anchor=north west, %anchor is upper left corner of the graphic
       xshift=\VAR{positions['left']}cm, %shifting around
       yshift=\VAR{positions['bottom']}cm]
      at (current page.north west) %left upper corner of the page
-     {\includegraphics[width=3cm]{\VAR{filenames['bl']}}
+     {\includegraphics[width=\VAR{qr_code_width}cm]{\VAR{filenames['bl']}}
      };
 \end{tikzpicture}
-
-
 \begin{tikzpicture}[overlay, remember picture]
 \node[anchor=north west, %anchor is upper left corner of the graphic
       xshift=\VAR{positions['right']}cm, %shifting around
       yshift=\VAR{positions['bottom']}cm]
      at (current page.north west) %left upper corner of the page
-     {\includegraphics[width=3cm]{\VAR{filenames['br']}}
+     {\includegraphics[width=\VAR{qr_code_width}cm]{\VAR{filenames['br']}}
      };
 \end{tikzpicture}
 
-\vspace{2cm}
+\hspace{5cm} \\
+
+\vspace{2.5cm}
 \setlength\tabcolsep{0.10cm}
 \begin{tabular}{? m{3cm}
     %% for item in items
@@ -75,42 +86,34 @@
             %% endif
         %% endfor
     %% endfor
-    ?
+    $ c ?
     }
     \noalign{\hrule height 1pt}
-   %% for i in range(n_cols)
-        &
-        %% if i % 2 == 0
-           \cellcolor{black}
-        %% endif
-    %% endfor
-  \\ \hline
 
-    Names
 %% for item in items
     & \multicolumn{\VAR{item['boxes']}}{c ? }{\VAR{item['name']}}
 %% endfor
-  \\
+    & \\
 %% for item in items
     & \multicolumn{\VAR{item['boxes']}}{c ? }{(\VAR{ "%0.2f" | format(item['price'])} \euro)}
 %% endfor
-  \\ \hline
+    & \\ \hline
 
 %% for i, name in enumerate(names)
     \VAR{name}
-    %% for j in range(n_cols)
+    %% for j in range(n_cols+1)
         %% if i % 2 == 0
             \cellcolor{black!10}
         %% endif
         &
-        %% if j + 1 == n_cols and i % 2 == 0
+        %% if j == n_cols and i % 2 == 0
            \cellcolor{black}
         %% endif
     %% endfor
      \\ \hline
 %% endfor
 
-   %% for i in range(n_cols)
+   %% for i in range(n_cols+1)
         &
         %% if i % 2 == 0
            \cellcolor{black}
@@ -120,5 +123,18 @@
   \noalign{\hrule height 1pt}
 \end{tabular}
 
+\centering
+\vspace{1em}
+
+\Large
+Instructions: Fill out a cell for everything you take.
+
+\vspace{1em}
+
+%% if show_fridge_question
+\Huge
+\color{red}
+\textbf{DID YOU REFILL THE FRIDGE?}
+%% endif
 
 \end{document}
