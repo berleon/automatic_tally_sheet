@@ -19,7 +19,7 @@ def get_qr_code(config, name=None):
         name = config
 
     qr = qrcode.QRCode(
-        error_correction=qrcode.constants.ERROR_CORRECT_L
+        error_correction=qrcode.constants.ERROR_CORRECT_Q
     )
     qr.add_data(config)
     qr.make(fit=True)
@@ -85,7 +85,7 @@ def run(args, names, items, output_name, output_dir):
     print(config)
 
     if 'fontsize' not in config:
-        config['fontsize'] = 10
+        config['fontsize'] = 12
     config['positions'] = positions
     config['qr_code_width'] = 3
 

@@ -1,10 +1,7 @@
 
 OUTPUT:=output
 
-all: $(OUTPUT)/caffee_schoko.pdf $(OUTPUT)/drinks_stuff.pdf
+all: $(OUTPUT)/drinks.pdf
 
-$(OUTPUT)/caffee_schoko.pdf: ats/*.py ats/templates/*.tex
-	./ats/main.py names.yaml caffee_schoko.yaml
-
-$(OUTPUT)/drinks_stuff.pdf: ats/*.py ats/templates/*.tex
-	./ats/main.py names.yaml drinks_stuff.yaml
+$(OUTPUT)/drinks.pdf: ats/*.py ats/templates/*.tex
+	./ats/main.py names.yaml drinks.yaml

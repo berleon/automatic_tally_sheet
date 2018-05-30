@@ -1,0 +1,9 @@
+- name: Mio Mate
+  price: 0.8
+  boxes: 35
+- name: Wasser
+  price: 0.4
+  boxes: 35
+- name: Kaffee
+  price: 0.2
+  boxes: 35

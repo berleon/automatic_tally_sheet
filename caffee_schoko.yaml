@@ -1,6 +1,0 @@
-- name: Coffee
-  price: 0.5
-  boxes: 80
-- name: Schokolade
-  price: 0.9
-  boxes: 30
