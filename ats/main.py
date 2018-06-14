@@ -76,7 +76,7 @@ def run(args, names, items, output_name, output_dir):
         'right_center': right - (qr_width + margin),
         'right': right,
         'top': -0.3,
-        'bottom': -17.3,
+        'bottom': -16.4,
     }
     config = {
         'names': names,
